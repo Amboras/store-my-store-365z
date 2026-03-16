@@ -172,7 +172,7 @@ export default function CheckoutPage() {
               <>
                 {/* Cart Items */}
                 <div className="space-y-3 mb-6 max-h-64 overflow-y-auto">
-                  {cart.items.map((item: any) => {
+                  {cart.items?.map((item: any) => {
                     const itemPrice = new Intl.NumberFormat('en-IN', {
                       style: 'currency',
                       currency: 'INR',

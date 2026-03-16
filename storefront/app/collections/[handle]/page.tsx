@@ -26,6 +26,9 @@ export default async function CollectionPage({
     notFound()
   }
 
+  const description = collection.metadata?.description
+  const hasDescription = typeof description === 'string' && description
+
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Collection Header */}
@@ -33,9 +36,9 @@ export default async function CollectionPage({
         <h1 className="text-5xl font-bold text-gray-900 mb-4">
           {collection.title}
         </h1>
-        {collection.metadata?.description && (
+        {hasDescription && (
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            {collection.metadata.description as string}
+            {description}
           </p>
         )}
       </div>

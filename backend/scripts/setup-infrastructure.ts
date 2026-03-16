@@ -66,8 +66,10 @@ export default async function ({ container }: any) {
       stockLocation = await stockLocationModuleService.createStockLocations({
         name: "Main Warehouse",
         address: {
+          address_1: "123 Main Street",
           city: "Bangalore",
           country_code: "in",
+          postal_code: "560001",
         },
       })
       logger.info(`   ✅ Created stock location: Main Warehouse`)

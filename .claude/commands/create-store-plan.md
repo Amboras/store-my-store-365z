@@ -2,247 +2,115 @@
 
 Create a detailed ecommerce store plan in PLAN.md based on user's request.
 
-## Instructions
+## Success Criteria
 
-When the user provides a store description, analyze it and create a comprehensive plan.
+- [ ] Store overview defined (name, industry, audience)
+- [ ] Design direction specified (style, colors, fonts)
+- [ ] Commerce features listed (regions, payments, features)
+- [ ] Medusa configuration planned (regions, product types, categories)
+- [ ] Storefront layout defined (template, pages, sections)
+- [ ] Theme customization tokens specified (exact hex codes, font names)
+- [ ] Implementation phases outlined
 
 ## Required Plan Sections
 
-### Store Overview
-- Store name
-- Industry/niche (fashion, beauty, electronics, home, food, etc.)
-- Target audience (demographics, preferences)
-- Value proposition (what makes this store unique)
-- Business model (B2C, B2B, marketplace, subscription)
+### 1. Store Overview
+- Name, industry/niche, target audience
+- Value proposition, business model (B2C/B2B/marketplace)
 
-### Design Direction
-- Visual style (minimal, bold, luxury, playful, modern, rustic, etc.)
-- Color palette (primary, secondary, accent colors)
-- Typography direction (modern sans-serif, elegant serif, bold display, etc.)
-- Layout preference (spacious, compact, grid-based, asymmetric)
-- Overall aesthetic (clean, vibrant, elegant, edgy, warm, etc.)
+### 2. Design Direction
+- Visual style (minimal/bold/luxury)
+- Color palette (specific hex codes)
+- Typography (exact font names)
+- Layout preference, overall aesthetic
 
-### Commerce Features
+### 3. Commerce Features
+Which features needed:
+- Multi-region? (list regions/currencies)
+- Promotions/discounts?
+- B2B features?
+- Reviews, wishlist, gift cards?
+- Subscriptions, digital products?
 
-Specify which features are needed:
-- Multi-region support? (list regions and currencies)
-- Promotions/discounts engine?
-- B2B features? (quotes, approval workflows, bulk ordering)
-- Marketplace/multi-vendor?
-- Product reviews and ratings?
-- Wishlist functionality?
-- Gift cards?
-- Loyalty program?
-- Subscription products?
-- Digital products/downloads?
+### 4. Medusa Configuration
 
-### Medusa Configuration
+**Regions & Currencies:**
+List all: US-USD, EU-EUR, etc.
 
-#### Regions & Currencies
-List all regions needed with their currencies:
-- US - USD
-- EU - EUR
-- UK - GBP
-- etc.
+**Payment Providers:**
+Stripe (default), others if needed
 
-#### Payment Providers
-- Stripe (default)
-- PayPal (if needed)
-- Other providers
+**Product Types:**
+Based on industry (clothing, electronics, etc.)
 
-#### Product Types
-Define product types based on industry:
-- Fashion: clothing, accessories, shoes
-- Beauty: skincare, makeup, fragrance
-- Electronics: computers, phones, accessories
-- etc.
+**Product Categories:**
+Hierarchy structure
 
-#### Product Categories
-Define category hierarchy:
+**Shipping Configuration:**
+Zones, carriers, providers
+
+### 5. Storefront Layout
+
+**Template Selection:**
+- minimal (clean, fast)
+- bold (vibrant, modern) [planned]
+- luxury (elegant, premium) [planned]
+
+**Homepage Sections:**
+Order of: Hero, Featured Products, Categories, etc.
+
+**Page Layouts:**
+Product page, collection page, cart/checkout styles
+
+**Custom Pages:**
+About, Contact, FAQ, Shipping, Privacy, Terms
+
+### 6. Theme Customization
+
+**Exact specifications:**
+
+Colors:
 ```
-Electronics
-├── Computers
-│   ├── Laptops
-│   └── Desktops
-├── Phones
-└── Accessories
-```
-
-#### Shipping Configuration
-- Shipping zones
-- Carriers (standard, express)
-- Fulfillment providers
-
-#### Tax Settings
-- Tax calculation method
-- Regional tax rates
-
-### Storefront Layout
-
-#### Template Selection
-Choose from available templates:
-- **minimal**: Clean, spacious, modern
-- **bold**: Vibrant, energetic, statement-making
-- **luxury**: Elegant, sophisticated, premium
-
-#### Homepage Sections
-List sections in order:
-1. Hero (full-width image, video, split, minimal)
-2. Featured products
-3. Category showcase
-4. Testimonials/social proof
-5. Newsletter signup
-6. etc.
-
-#### Product Page Layout
-- Sidebar layout (image gallery + details sidebar)
-- Centered layout (image top, details below)
-- Split layout (50/50 image and details)
-
-#### Collection Page Layout
-- Grid (2, 3, or 4 columns)
-- Masonry (Pinterest-style)
-- List view with large images
-
-#### Cart & Checkout
-- Cart style (sidebar drawer, dedicated page, modal)
-- Checkout flow (single-page, multi-step)
-
-#### Custom Pages Needed
-- About Us
-- Contact
-- FAQ
-- Shipping & Returns
-- Privacy Policy
-- Terms of Service
-- etc.
-
-### Theme Customization
-
-Specify exact design tokens:
-
-#### Colors
-```
-Primary: #1a1a1a (or specific hex)
+Primary: #1a1a1a
 Secondary: #e8d5b5
 Accent: #c9a875
-Background: #ffffff
-Text: #333333
 ```
 
-#### Typography
+Typography:
 ```
-Headings: "Playfair Display" or similar
-Body: "Inter" or similar
-Sizes: Base 16px, Scale: 1.25
-```
-
-#### Spacing
-- Compact (smaller gaps)
-- Normal (standard spacing)
-- Spacious (generous whitespace)
-
-#### Border Radius
-- Sharp (0px)
-- Subtle (4px)
-- Rounded (8px)
-- Pill (999px)
-
-### Implementation Tasks
-
-Break down into phases:
-
-#### Phase 1: Medusa Backend Configuration
-- Set up PostgreSQL and Redis
-- Configure regions and currencies
-- Set up payment providers
-- Create product types and categories
-- Configure shipping options
-- Set up tax settings
-
-#### Phase 2: Storefront Generation
-- Copy selected template (minimal/bold/luxury)
-- Configure Medusa client connection
-- Set up environment variables
-- Verify connection to backend
-
-#### Phase 3: Theme Customization
-- Apply color palette to Tailwind config
-- Configure typography
-- Update spacing scale
-- Set border radius values
-- Apply to components
-
-#### Phase 4: Component Composition
-- Customize homepage sections
-- Configure product page layout
-- Set up collection page
-- Customize cart and checkout
-- Add custom pages
-
-#### Phase 5: Content & Testing
-- Add sample products (optional)
-- Test checkout flow
-- Verify responsive design
-- Test payment integration
-- Performance optimization
-
-#### Phase 6: Deployment
-- Deploy Medusa backend (Railway/Medusa Cloud/AWS)
-- Deploy Next.js storefront (Vercel/Netlify)
-- Configure custom domain
-- Set up SSL
-- Production testing
-
-## Example Plan Structure
-
-```markdown
-# Store Plan: [Store Name]
-
-## Store Overview
-**Name**: Premium Skincare Co
-**Industry**: Beauty/Skincare
-**Target Audience**: Women 25-45, health-conscious, premium buyers
-**Value Proposition**: Clean, science-backed skincare with transparency
-**Business Model**: B2C with subscription options
-
-## Design Direction
-**Visual Style**: Luxury minimal
-**Color Palette**:
-- Primary: #1a1a1a (deep black)
-- Secondary: #e8d5b5 (warm cream)
-- Accent: #c9a875 (muted gold)
-**Typography**: Playfair Display (headings), Inter (body)
-**Layout**: Spacious with generous whitespace
-**Aesthetic**: Clean, elegant, trustworthy
-
-## Commerce Features
-- ✅ Multi-region (US, EU, UK)
-- ✅ Promotions/discounts
-- ✅ Product reviews
-- ✅ Wishlist
-- ✅ Subscription products
-- ❌ B2B features
-- ❌ Marketplace
-
-[... continue with all sections ...]
+Headings: "Playfair Display"
+Body: "Inter"
+Scale: 1.25
 ```
 
-## Important Notes
+Spacing: compact/normal/spacious
 
-1. **Be Specific**: Use exact hex colors, font names, specific regions
-2. **Think User Journey**: Plan the customer experience from landing to checkout
-3. **Consider Scale**: Plan for growth (multi-region, multiple products)
-4. **Stay Realistic**: Use features that Medusa v2 actually supports
-5. **Ask Questions**: If user's request is vague, ask clarifying questions
+Border Radius: sharp(0px)/subtle(4px)/rounded(8px)/pill(999px)
+
+### 7. Implementation Phases
+
+Break down:
+1. Medusa backend configuration
+2. Storefront generation
+3. Theme customization
+4. Component composition
+5. Content & testing
+6. Deployment
+
+## Guidelines
+
+1. **Be Specific:** Use exact hex codes, font names, specific regions
+2. **Think User Journey:** Plan customer experience from landing to checkout
+3. **Stay Realistic:** Use features Medusa v2 actually supports
+4. **Ask Questions:** If request is vague, ask for clarification
 
 ## After Creating Plan
 
 1. Save as `PLAN.md` in project root
 2. Review with user for confirmation
-3. Wait for user approval before running `/implement-store`
+3. Wait for approval before running `/implement-store`
 4. Make adjustments if needed
 
 ## Next Command
 
-After plan is approved: `/implement-store`
+After plan approved: `/implement-store`

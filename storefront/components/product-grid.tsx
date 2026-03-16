@@ -51,7 +51,7 @@ export default function ProductGrid({
         return (a.title || '').localeCompare(b.title || '')
       case 'newest':
       default:
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime()
     }
   }) : rawProducts
 

@@ -1,263 +1,151 @@
 ## Overview
 
-Make iterative changes to an existing generated store based on user feedback.
+Make iterative changes to existing generated store based on user feedback.
 
-## Usage
+## Usage Examples
 
-User provides edit requests like:
-- "Make the homepage hero section taller"
+- "Make homepage hero taller"
 - "Change primary color to navy blue"
-- "Add a testimonials section to homepage"
+- "Add testimonials section"
 - "Switch product grid to 3 columns"
 - "Make product images larger"
-- "Add a newsletter signup form"
 
 ## Approach
 
-### 1. Identify the Store
+### 1. Identify Store
 
-Determine which store to edit:
-- If only one store exists in `storefront/`, use that
-- If multiple stores exist, ask user which one
-- Default to most recently created if unclear
+- Default to `storefront/` (in-place customization)
+- If multiple stores, ask which one
 
-### 2. Understand the Request
+### 2. Understand Request
 
-Parse the edit request to identify:
-- **What to change**: Component, style, layout, content
-- **Where to change it**: Which file(s) need editing
-- **How to change it**: Specific code modifications needed
+Parse to identify:
+- What to change (component, style, layout, content)
+- Where to change it (which files)
+- How to change it (specific modifications)
 
 ### 3. Make Atomic Changes
 
-**Principles**:
-- Edit specific files, don't regenerate entire components
+**Principles:**
+- Edit specific files, don't regenerate
 - Make minimal, focused changes
 - Preserve existing functionality
-- Maintain code style and patterns
+- Maintain code style
 
-**Common Edit Patterns**:
+**Common edit patterns:**
 
-#### Color Changes
-Edit `tailwind.config.ts`:
-```typescript
-// Change primary color
-theme: {
-  extend: {
-    colors: {
-      primary: '#1e3a8a', // navy blue
-    }
-  }
-}
-```
+**Colors:**
+Edit `tailwind.config.ts` → colors section
 
-#### Layout Changes
-Edit specific component files:
-```typescript
-// Make hero taller
-<section className="h-screen"> // was h-[600px]
-```
+**Layout:**
+Edit component files → height, grid classes
 
-#### Component Addition
-Add new components to pages:
-```typescript
-// Add testimonials section
-import Testimonials from '@/components/testimonials'
+**Typography:**
+Edit `app/layout.tsx` or `tailwind.config.ts`
 
-<Testimonials />
-```
+**Component Addition:**
+Create in `components/`, import in page
 
-#### Typography Changes
-Edit `app/layout.tsx` or `tailwind.config.ts`:
-```typescript
-// Change font
-const playfair = Playfair_Display({ subsets: ['latin'] })
-```
-
-#### Grid Layout Changes
-Edit product grid component:
-```typescript
-// Switch to 3 columns
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-```
+**Grid Changes:**
+Edit grid-cols values in components
 
 ### 4. Verify Changes
 
-After making edits:
-
 ```bash
-# Type check
-cd storefront/{store-id} && npm run type-check
-
-# Check for errors in dev mode
-# (server should already be running with hot reload)
+cd storefront
+npm run type-check
 ```
 
 Verify:
 - No TypeScript errors
 - No console errors
 - Changes appear correctly
-- Responsive design still works
-- No broken functionality
+- Responsive design intact
 
 ### 5. Report Changes
 
-Tell user:
 ```markdown
 ## Changes Applied ✅
 
-**Store**: {store-id}
-**Edited**:
-- `app/page.tsx` - Made hero section taller (h-screen)
-- `tailwind.config.ts` - Changed primary color to navy blue
+**Store:** {store-id}
 
-**Preview**: http://localhost:3000 (refresh to see changes)
+**Edited:**
+- app/page.tsx - Made hero taller
+- tailwind.config.ts - Changed primary color
 
-**Next Steps**:
-- Review the changes in your browser
-- Make more edits if needed: `/edit-store "..."`
-- Deploy when satisfied: `/deploy-store`
+**Preview:** http://localhost:3000
+
+**Next Steps:**
+- Review in browser
+- Make more edits if needed
+- Deploy when satisfied
 ```
 
 ## Common Edit Types
 
 ### Design/Styling
-
-**Colors**:
-- Edit `tailwind.config.ts` → colors section
-- Update component className props
-
-**Typography**:
-- Import new fonts in `app/layout.tsx`
-- Update font family in `tailwind.config.ts`
-- Change text sizes in components
-
-**Spacing**:
-- Adjust padding/margin classes: `p-4` → `p-8`
-- Update container max-widths
-- Change gap values in grids
-
-**Borders/Shadows**:
-- Update border radius: `rounded-md` → `rounded-lg`
-- Add/remove shadows: `shadow-sm`, `shadow-lg`
+- Colors: Edit `tailwind.config.ts`
+- Typography: Import fonts, update config
+- Spacing: Adjust padding/margin classes
+- Borders/Shadows: Update class values
 
 ### Layout
-
-**Section Heights**:
-- Edit height classes: `h-96` → `h-screen`
-- Adjust min-height values
-
-**Grid Columns**:
-- Change grid-cols values
-- Adjust responsive breakpoints
-
-**Container Widths**:
-- Update max-width classes
-- Change container padding
-
-**Component Order**:
-- Reorder sections in page files
-- Move components around
+- Section heights: Edit height classes
+- Grid columns: Change grid-cols
+- Container widths: Update max-width
+- Component order: Reorder in page files
 
 ### Components
-
-**Add New Components**:
-1. Create component file in `components/`
-2. Import in page
-3. Add to JSX
-
-**Remove Components**:
-1. Comment out or delete import
-2. Remove from JSX
-
-**Modify Existing**:
-- Edit component props
-- Update internal logic
-- Change styles
+- Add: Create file, import, use
+- Remove: Delete import and JSX
+- Modify: Edit props and logic
 
 ### Content
-
-**Text Changes**:
-- Edit text content in components
-- Update headings and descriptions
-- Modify button labels
-
-**Images**:
-- Replace image URLs
-- Update alt text
-- Change image sizes
+- Text: Edit in components
+- Images: Replace URLs, alt text
+- Buttons: Update labels
 
 ## Guidelines
 
-### Do's ✅
+**Do's:**
 - Make small, incremental changes
-- Use existing component patterns
+- Use existing patterns
 - Maintain TypeScript types
-- Keep code formatted
-- Test changes immediately
-- Preserve responsive design
+- Test immediately
 
-### Don'ts ❌
-- Regenerate entire files for small changes
+**Don'ts:**
+- Regenerate entire files
 - Break existing functionality
 - Ignore TypeScript errors
 - Make too many changes at once
-- Skip testing
-- Introduce new dependencies without need
 
 ## Error Handling
 
-If edit fails:
-1. Read error message carefully
-2. Undo the change if needed (`git restore {file}`)
+**If edit fails:**
+1. Read error message
+2. Undo if needed: `git restore {file}`
 3. Try alternative approach
 4. Ask user for clarification if ambiguous
 
-Common issues:
+**Common issues:**
 - TypeScript errors → Fix type mismatches
 - Import errors → Verify file paths
 - Style not applying → Check Tailwind config
-- Component not rendering → Verify JSX syntax
 
 ## Multiple Edits
 
 User can chain edits:
 ```
-User: "Make hero taller"
-→ Edit applied
-User: "Now change color to blue"
-→ Edit applied
-User: "Add testimonials section"
-→ Edit applied
+"Make hero taller" → applied
+"Change color to blue" → applied
+"Add testimonials" → applied
 ```
 
-Each edit builds on the previous state.
+Each builds on previous state.
 
-## Advanced Edits
+## Next Steps
 
-For complex changes requiring multiple files:
-1. Identify all affected files
-2. Make changes in logical order
-3. Test after each file
-4. Report all changes at end
-
-Example:
-```
-Request: "Add dark mode support"
-
-Files to edit:
-1. app/providers.tsx - Add dark mode provider
-2. tailwind.config.ts - Add dark mode config
-3. components/* - Add dark: classes
-4. app/layout.tsx - Add theme toggle
-
-Report all changes together.
-```
-
-## Next Steps After Edit
-
-User can:
+After edit, user can:
 - Make more edits
-- Deploy changes: `/deploy-store`
-- Reset to previous state (if git is used)
+- Deploy: `/deploy-store`
 - Edit files directly in IDE

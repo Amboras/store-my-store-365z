@@ -1,4 +1,4 @@
-.PHONY: help install dev dev-backend dev-storefront build type-check clean db-up db-down db-reset seed logs tail-logs stop test-storefront test-apis test-e2e test-frontend test-all
+.PHONY: help install dev dev-backend dev-storefront build type-check clean db-up db-down db-reset db-clear seed seed-clear create-admin logs tail-logs stop test-storefront test-apis test-e2e test-frontend test-all
 
 help:
 	@echo "Available commands:"
@@ -10,8 +10,11 @@ help:
 	@echo "  make type-check    - TypeScript type checking"
 	@echo "  make db-up         - Start PostgreSQL + Redis containers"
 	@echo "  make db-down       - Stop database containers"
-	@echo "  make db-reset      - Reset database (migrations)"
+	@echo "  make db-reset      - Reset database (run migrations)"
+	@echo "  make db-clear      - Clear ALL data and reset database (DESTRUCTIVE)"
 	@echo "  make seed          - Seed demo data (categories, products, promotions)"
+	@echo "  make seed-clear    - Clear seeded demo data only"
+	@echo "  make create-admin  - Create admin user (default: admin@medusa-test.com / supersecret)"
 	@echo "  make logs          - View current dev logs"
 	@echo "  make tail-logs     - Tail dev logs in real-time"
 	@echo "  make stop          - Stop all running services"
@@ -64,6 +67,52 @@ db-reset:
 	@echo "🔄 Resetting database..."
 	cd backend && npm run migrate
 	@echo "✅ Database reset complete"
+
+db-clear:
+	@echo "⚠️  DESTRUCTIVE: This will delete ALL data and reset the database!"
+	@read -p "Are you sure? Type 'yes' to continue: " confirm && [ "$$confirm" = "yes" ] || (echo "Aborted" && exit 1)
+	@echo "🗑️  Clearing database..."
+	cd backend && docker-compose down -v
+	@echo "📦 Starting fresh database..."
+	cd backend && docker-compose up -d
+	@echo "⏳ Waiting for database to be ready..."
+	@sleep 5
+	@echo "🔄 Running migrations..."
+	cd backend && npm run migrate
+	@echo "🚀 Setting up infrastructure..."
+	cd backend && npx medusa exec ./scripts/setup-infrastructure.ts
+	@echo "👤 Creating default admin user..."
+	cd backend && npx medusa user -e admin@medusa-test.com -p supersecret 2>&1 | grep -v "warn\|info" || true
+	@echo ""
+	@echo "✅ Database cleared and reset complete!"
+	@echo ""
+	@echo "📧 Admin Email: admin@medusa-test.com"
+	@echo "🔑 Admin Password: supersecret"
+	@echo "🌐 Admin Panel: http://localhost:9000/app"
+	@echo ""
+	@echo "💡 Next steps:"
+	@echo "   1. Run 'make seed' to add demo data"
+	@echo "   2. Run 'make dev' to start backend + storefront"
+	@echo "   3. Or run 'make create-admin' to create a custom admin user"
+
+seed-clear:
+	@echo "🗑️  Clearing demo data..."
+	cd backend && npx medusa exec ./scripts/clear-demo-data.ts
+	@echo "✅ Demo data cleared"
+
+create-admin:
+	@echo "👤 Creating admin user..."
+	@read -p "Email (default: admin@medusa-test.com): " email; \
+	email=$${email:-admin@medusa-test.com}; \
+	read -sp "Password (default: supersecret): " password; \
+	password=$${password:-supersecret}; \
+	echo ""; \
+	cd backend && npx medusa user -e "$$email" -p "$$password" 2>&1 | grep -v "warn\|info" || echo "✅ User created or already exists"; \
+	echo ""; \
+	echo "📧 Email: $$email"; \
+	echo "🔑 Password: $$password"; \
+	echo ""; \
+	echo "🌐 Login at: http://localhost:9000/app"
 
 seed:
 	@echo "🌱 Seeding demo data..."

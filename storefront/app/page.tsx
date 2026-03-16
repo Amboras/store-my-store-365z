@@ -1,7 +1,12 @@
-import ProductGrid from '@/components/product-grid'
+'use client'
+
 import Link from 'next/link'
+import CollectionSection from '@/components/collection-section'
+import { useCollections } from '@/hooks/use-collections'
 
 export default function HomePage() {
+  const { data: collections, isLoading } = useCollections()
+
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -32,23 +37,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">
-              Featured Products
-            </h2>
+      {/* Collections Sections */}
+      {isLoading ? (
+        <section className="py-16">
+          <div className="container mx-auto px-4 text-center">
+            <div className="animate-spin mx-auto h-12 w-12 border-4 border-gray-300 border-t-blue-600 rounded-full"></div>
+            <p className="mt-4 text-gray-600">Loading collections...</p>
+          </div>
+        </section>
+      ) : collections && collections.length > 0 ? (
+        <>
+          {collections.map((collection, index) => (
+            <div
+              key={collection.id}
+              className={index % 2 === 1 ? 'bg-gray-50' : ''}
+            >
+              <CollectionSection collection={collection} />
+            </div>
+          ))}
+        </>
+      ) : (
+        <section className="py-16">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-gray-600">No collections available yet.</p>
             <Link
               href="/products"
-              className="text-blue-600 hover:text-blue-700 font-semibold"
+              className="text-blue-600 hover:text-blue-700 font-semibold mt-4 inline-block"
             >
-              View all →
+              Browse all products →
             </Link>
           </div>
-          <ProductGrid limit={8} />
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Features Section */}
       <section className="bg-gray-50 py-16">
