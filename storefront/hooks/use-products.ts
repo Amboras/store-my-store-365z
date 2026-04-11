@@ -9,6 +9,7 @@ interface UseProductsOptions {
   offset?: number
   collection_id?: string
   category_id?: string
+  q?: string
 }
 
 export function useProducts(options: UseProductsOptions = {}) {
@@ -22,6 +23,7 @@ export function useProducts(options: UseProductsOptions = {}) {
       const response = await medusaClient.store.product.list({
         limit: options.limit || 100,
         offset: options.offset || 0,
+        q: options.q || undefined,
         collection_id: options.collection_id ? [options.collection_id] : undefined,
         category_id: options.category_id ? [options.category_id] : undefined,
         region_id: regionId,
