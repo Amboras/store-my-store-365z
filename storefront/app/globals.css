@@ -4,35 +4,39 @@
 
 @layer base {
   :root {
-    --background: 40 20% 98%;
-    --foreground: 0 0% 10%;
-    --muted: 40 10% 94%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 35 40% 50%;
+    /* Glow Lift Pro — Soft champagne + deep rose palette */
+    --background: 30 20% 98%;
+    --foreground: 340 15% 12%;
+    --muted: 30 18% 93%;
+    --muted-foreground: 340 8% 48%;
+    --accent: 340 35% 58%;
     --accent-foreground: 0 0% 100%;
-    --border: 40 10% 88%;
-    --ring: 35 40% 50%;
-    --primary: 0 0% 10%;
+    --border: 30 15% 87%;
+    --ring: 340 35% 58%;
+    --primary: 340 30% 22%;
     --primary-foreground: 0 0% 98%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    /* Brand colors (dynamically injected from Store.metadata.brand) */
-    /* Access in CSS: var(--brand-primary), var(--brand-secondary) */
-    /* Managed by BrandStyleInjector component */
+    /* Brand tokens */
+    --brand-rose: #c4768a;
+    --brand-rose-light: #f0dde3;
+    --brand-gold: #c9a87c;
+    --brand-cream: #faf6f2;
+    --brand-deep: #2a1520;
   }
 
   .dark {
-    --background: 0 0% 6%;
-    --foreground: 40 20% 94%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 55%;
-    --accent: 35 45% 55%;
+    --background: 340 10% 7%;
+    --foreground: 30 20% 94%;
+    --muted: 340 8% 13%;
+    --muted-foreground: 30 10% 55%;
+    --accent: 340 35% 60%;
     --accent-foreground: 0 0% 100%;
-    --border: 0 0% 16%;
-    --ring: 35 45% 55%;
-    --primary: 40 20% 94%;
-    --primary-foreground: 0 0% 6%;
+    --border: 340 8% 18%;
+    --ring: 340 35% 60%;
+    --primary: 30 20% 90%;
+    --primary-foreground: 340 15% 10%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
   }
@@ -66,13 +70,14 @@
   }
   .link-underline::after {
     content: '';
-    @apply absolute bottom-0 left-0 h-px w-0 bg-foreground transition-all duration-300;
+    @apply absolute bottom-0 left-0 h-px w-0 transition-all duration-300;
+    background-color: var(--brand-rose, hsl(var(--accent)));
   }
   .link-underline:hover::after {
     @apply w-full;
   }
 
-  /* Brand color utilities - uses colors from Store.metadata.brand */
+  /* Brand color utilities */
   .btn-brand-primary {
     background-color: var(--brand-primary, hsl(var(--primary)));
     color: white;
@@ -100,6 +105,77 @@
   .bg-brand-secondary {
     background-color: var(--brand-secondary, hsl(var(--accent)));
   }
+
+  /* Glow Lift Pro custom utilities */
+  .glp-btn-primary {
+    background-color: var(--brand-deep);
+    color: white;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    transition: all 0.2s ease;
+  }
+  .glp-btn-primary:hover {
+    background-color: #3d1f2e;
+  }
+
+  .glp-btn-rose {
+    background-color: var(--brand-rose);
+    color: white;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    transition: all 0.2s ease;
+  }
+  .glp-btn-rose:hover {
+    background-color: #b56779;
+  }
+
+  .glp-btn-outline {
+    border: 1.5px solid var(--brand-deep);
+    color: var(--brand-deep);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+  .glp-btn-outline:hover {
+    background-color: var(--brand-deep);
+    color: white;
+  }
+
+  .glp-rose-badge {
+    background-color: var(--brand-rose-light);
+    color: var(--brand-rose);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+  }
+
+  .glp-section-label {
+    color: var(--brand-rose);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .glp-gold-divider {
+    width: 3rem;
+    height: 2px;
+    background-color: var(--brand-gold);
+  }
+
+  .glp-cream-bg {
+    background-color: var(--brand-cream);
+  }
 }
 
 /* Smooth scrolling */
@@ -107,28 +183,65 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Selection color */
+/* Selection */
 ::selection {
-  @apply bg-accent/20 text-foreground;
+  background-color: var(--brand-rose-light);
+  color: var(--brand-deep);
 }
 
-/* Focus styles */
+/* Focus */
 :focus-visible {
   @apply outline-2 outline-offset-2 outline-ring;
 }
 
-/* Cookie consent animation */
+/* Animations */
 @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 118, 138, 0.25); }
+  50% { box-shadow: 0 0 0 12px rgba(196, 118, 138, 0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .animate-fade-in {
-  animation: fade-in 0.3s ease-out;
+  animation: fade-in 0.5s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s ease-out;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2.5s ease-in-out infinite;
+}
+
+.animate-ticker {
+  animation: ticker 30s linear infinite;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* Product image hover */
+.product-img-hover {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.product-img-hover:hover {
+  transform: scale(1.04);
 }
